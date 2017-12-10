@@ -1,0 +1,264 @@
+---
+swagger: "2.0"
+info:
+  description: ""
+  version: "1.0.0"
+  title: "SmartCarAPI"
+  license:
+    name: "MIT"
+    url: "http://github.com/gruntjs/grunt/blob/master/LICENSE-MIT"
+basePath: "/v1"
+schemes:
+- "https"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+paths:
+  /vehicles/{vehicleid}:
+    get:
+      summary: "Vehicle Info."
+      operationId: "getVehicleInfo"
+      parameters:
+      - name: "vehicleid"
+        in: "path"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/VehicleInfoResponse"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/Error"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/Error"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "Default"
+  /vehicles/{vehicleid}/doors:
+    get:
+      summary: "Security"
+      operationId: "getDoorsByVehicleId"
+      parameters:
+      - name: "vehicleid"
+        in: "path"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/SecurityResponse"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/Error"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/Error"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "Default"
+  /vehicles/{vehicleid}/fuel:
+    get:
+      summary: "Fuel"
+      operationId: "getFuelByVehicleId"
+      parameters:
+      - name: "vehicleid"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/FuelRangeResponse"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/Error"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/Error"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "Default"
+  /vehicles/{vehicleid}/battery:
+    get:
+      summary: "Battery"
+      operationId: "getBatteryByVehicleId"
+      parameters:
+      - name: "vehicleid"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/BatteryRangeResponse"
+      x-swagger-router-controller: "Default"
+  /vehicles/{vehicleid}/engine:
+    post:
+      summary: "START/STOP engine"
+      operationId: "triggerEngineByVehicleId"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "vehicleid"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/EngineRequest"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/EngineResponse"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/Error"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/Error"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "Default"
+definitions:
+  VehicleInfoResponse:
+    type: "object"
+    properties:
+      vin:
+        type: "integer"
+        example: 123456789
+      color:
+        type: "string"
+        example: "Mettalic Silver"
+      doorCount:
+        type: "integer"
+        example: 4
+      driveTrain:
+        type: "string"
+        example: "v8"
+    example:
+      color: "Mettalic Silver"
+      vin: 123456789
+      driveTrain: "v8"
+      doorCount: 4
+  SecurityResponse:
+    type: "object"
+    properties:
+      location:
+        type: "string"
+        example: "frontLeft"
+      locked:
+        type: "boolean"
+        example: true
+    example:
+      location: "frontLeft"
+      locked: true
+  FuelRangeResponse:
+    type: "object"
+    properties:
+      percent:
+        type: "integer"
+        example: 30
+    example:
+      percent: 30
+  BatteryRangeResponse:
+    type: "object"
+    properties:
+      percent:
+        type: "integer"
+        example: 30
+    example:
+      percent: 30
+  EngineRequest:
+    type: "object"
+    properties:
+      action:
+        type: "string"
+        example: "START"
+        enum:
+        - "START"
+        - "STOP"
+    example:
+      action: "START"
+  EngineResponse:
+    type: "object"
+    properties:
+      status:
+        type: "string"
+        example: "success"
+        enum:
+        - "success"
+        - "error"
+    example:
+      status: "success"
+  Error:
+    type: "object"
+    properties:
+      message:
+        type: "string"
+        example: "Unauthorized Access"
+      errorCode:
+        type: "number"
+        example: 400
