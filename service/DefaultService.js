@@ -59,7 +59,7 @@ exports.getVehicleInfoByVehicleId = function (params,res,next) {
  * returns EngineResponse
  **/
 exports.triggerEngineByVehicleId = function (params,res,next) {
-
+    processResponse("triggerEngineByVehicleId",res,gmapi.triggerEngineAction(params.vehicleid.value,params.body.value.action));
 }
 
 function processResponse(name,res,responsePromise){

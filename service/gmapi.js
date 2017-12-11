@@ -107,16 +107,29 @@ exports.getBattery = function (vehicleId) {
 
 exports.triggerEngineAction = function (vehicleId,command) {
     let defer = Q.defer();
+    var commands ={
+        'START' : 'START_VEHICLE',
+        'STOP' : 'STOP_VEHICLE'
+    }
     axios.post(gmapiUrl+'/actionEngineService',{
         id : vehicleId,
-        command: command,
+        command: commands[command],
         responseType: "JSON"
     })
         .then((response)=>{
             logger.debug(response);
+            if(response.data.status === '200' || response.data.status === 200) {
+
+                defer.resolve(jsonFormatter.mapToFormat("EngineActionResponse", response.data));
+            }
+
+            else {
+                defer.reject({statusCode: 404,message: "Failure"});
+            }
         })
         .catch((err)=>{
             logger.error(err);
         });
+    return defer.promise;
 }
 

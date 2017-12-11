@@ -10,6 +10,8 @@ exports.mapToFormat = function (model,data) {
             return mapToFuelResponse(data);
         case "BatteryResponse":
             return mapToBatteryResponse(data);
+        case "EngineActionResponse":
+            return mapToEngineActionResponse(data);
         default:
             break;
     }
@@ -49,6 +51,17 @@ const mapToFuelResponse = function (data) {
 const mapToBatteryResponse = function (data) {
     var formatted = {
         percent : data.batteryLevel.value
+    };
+    return formatted;
+}
+
+const mapToEngineActionResponse = function (data) {
+    var statuses = {
+        'EXECUTED' : 'success',
+        'FAILED' : 'failure'
+    };
+    var formatted = {
+        status : statuses[data.actionResult.status]
     };
     return formatted;
 }
