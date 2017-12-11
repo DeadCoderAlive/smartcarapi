@@ -37,13 +37,21 @@ exports.getSecurityStatus = function (vehicleId) {
     })
         .then((response)=>{
             logger.debug(response);
+            if(response.data.status === '200' || response.data.status === 200){
+                defer.resolve(jsonFormatter.mapToFormat("SecurityStatusResponse",response.data.data.doors.values));
+            }
+            else {
+                defer.reject({statusCode: 404,message: "Failure"});
+            }
         })
         .catch((err)=>{
             logger.error(err);
+            defer.reject(err);
         });
+    return defer.promise;
 }
 
-exports.getEnergy = function (vehicleId) {
+exports.getFuel = function (vehicleId) {
     let defer = Q.defer();
     axios.post(gmapiUrl+'/getEnergyService',{
         id : vehicleId,
@@ -51,10 +59,50 @@ exports.getEnergy = function (vehicleId) {
     })
         .then((response)=>{
             logger.debug(response);
+            if(response.data.status === '200' || response.data.status === 200){
+                if(!isNaN(response.data.data.tankLevel.value)){
+                    defer.resolve(jsonFormatter.mapToFormat("FuelResponse",response.data.data));
+                }
+                else {
+                    defer.reject({statusCode : 404, message: "Not Found"});
+                }
+            }
+            else {
+                defer.reject({statusCode: 404,message: "Failure"});
+            }
+
         })
         .catch((err)=>{
             logger.error(err);
         });
+    return defer.promise;
+}
+
+exports.getBattery = function (vehicleId) {
+    let defer = Q.defer();
+    axios.post(gmapiUrl+'/getEnergyService',{
+        id : vehicleId,
+        responseType: "JSON"
+    })
+        .then((response)=>{
+            logger.debug(response);
+            if(response.data.status === '200' || response.data.status === 200){
+                if(!isNaN(response.data.data.batteryLevel.value)){
+                    defer.resolve(jsonFormatter.mapToFormat("BatteryResponse",response.data.data));
+                }
+                else {
+                    defer.reject({statusCode : 404, message: "Not Found"});
+                }
+            }
+            else {
+                defer.reject({statusCode: 404,message: "Failure"});
+            }
+
+        })
+        .catch((err)=>{
+            logger.error(err);
+        });
+    return defer.promise;
 }
 
 exports.triggerEngineAction = function (vehicleId,command) {

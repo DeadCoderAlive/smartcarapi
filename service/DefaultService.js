@@ -9,7 +9,7 @@ const gmapi = require('./gmapi');
  * returns BatteryRangeResponse
  **/
 exports.getBatteryByVehicleId = function (params,res,next) {
-
+    processResponse("getBatteryByVehicleId",res,gmapi.getBattery(params.vehicleid.value));
 }
 
 /**
@@ -19,7 +19,9 @@ exports.getBatteryByVehicleId = function (params,res,next) {
  * returns SecurityResponse
  **/
 exports.getDoorsByVehicleId = function (params,res,next) {
-
+    processResponse("getDoorsById",res,gmapi.getSecurityStatus(
+        params.vehicleid.value
+    ));
 }
 
 
@@ -30,7 +32,7 @@ exports.getDoorsByVehicleId = function (params,res,next) {
  * returns FuelRangeResponse
  **/
 exports.getFuelByVehicleId = function (params,res,next) {
-
+    processResponse("getFuelByVehicleId",res,gmapi.getFuel(params.vehicleid.value));
 }
 
 

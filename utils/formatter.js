@@ -4,13 +4,18 @@ exports.mapToFormat = function (model,data) {
     switch(model){
         case "VehicleInfoResponse":
             return mapToVehicleInfoResponse(data);
-            break;
+        case "SecurityStatusResponse":
+            return mapToSecurityStatusResponse(data);
+        case "FuelResponse":
+            return mapToFuelResponse(data);
+        case "BatteryResponse":
+            return mapToBatteryResponse(data);
         default:
             break;
     }
 }
 
-var mapToVehicleInfoResponse = function(data){
+const mapToVehicleInfoResponse = function(data){
   var formatted = {
       vin : data.vin.value || "",
       color : data.color.value || "",
@@ -18,4 +23,32 @@ var mapToVehicleInfoResponse = function(data){
       driveTrain : data.driveTrain.value || ""
   }
   return formatted;
+}
+
+const mapToSecurityStatusResponse = function(data){
+    var formatted = [];
+    for(var i=0;i<data.length;i++){
+        var fdoor = {
+            location : data[i].location.value,
+            locked : data[i].locked.value
+        }
+        if(data[i].locked.value == "True"){
+            formatted.push(fdoor);
+        }
+    }
+    return formatted;
+}
+
+const mapToFuelResponse = function (data) {
+    var formatted = {
+        percent : data.tankLevel.value
+    };
+    return formatted;
+}
+
+const mapToBatteryResponse = function (data) {
+    var formatted = {
+        percent : data.batteryLevel.value
+    };
+    return formatted;
 }
