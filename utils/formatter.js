@@ -18,23 +18,23 @@ exports.mapToFormat = function (model,data) {
 }
 
 const mapToVehicleInfoResponse = function(data){
-  var formatted = {
+  return {
       vin : data.vin.value || "",
       color : data.color.value || "",
       doorCount : data.fourDoorSedan.value == true ? 4 : data.twoDoorCoupe.value == true ? 2 : 4,
       driveTrain : data.driveTrain.value || ""
-  }
-  return formatted;
+  };
 }
 
 const mapToSecurityStatusResponse = function(data){
-    var formatted = [];
-    for(var i=0;i<data.length;i++){
-        var fdoor = {
+    let formatted = [];
+    for(let i=0;i<data.length;i++){
+        let fdoor = {
             location : data[i].location.value,
             locked : data[i].locked.value
-        }
-        if(data[i].locked.value == "True"){
+        };
+        if (data[i].locked.value != "True") {
+        } else {
             formatted.push(fdoor);
         }
     }
@@ -42,26 +42,23 @@ const mapToSecurityStatusResponse = function(data){
 }
 
 const mapToFuelResponse = function (data) {
-    var formatted = {
+ return {
         percent : data.tankLevel.value
     };
-    return formatted;
 }
 
 const mapToBatteryResponse = function (data) {
-    var formatted = {
+   return {
         percent : data.batteryLevel.value
     };
-    return formatted;
 }
 
 const mapToEngineActionResponse = function (data) {
-    var statuses = {
+    let statuses = {
         'EXECUTED' : 'success',
         'FAILED' : 'failure'
     };
-    var formatted = {
+    return {
         status : statuses[data.actionResult.status]
     };
-    return formatted;
 }

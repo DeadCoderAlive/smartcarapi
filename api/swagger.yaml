@@ -7,6 +7,8 @@ info:
   license:
     name: "MIT"
     url: "http://github.com/gruntjs/grunt/blob/master/LICENSE-MIT"
+produces:
+  - application/json
 paths:
   /vehicles/{vehicleid}:
     get:
