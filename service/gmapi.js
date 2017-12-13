@@ -10,7 +10,11 @@ const _ = require('lodash');
 
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
-
+/**
+ * returns vehicle info data from gmapi for
+ * @param vehicleId
+ * @returns {*|Promise<Cancel>|Promise|promise}
+ */
 exports.getVehicleInfo = function (vehicleId) {
     let defer = Q.defer();
     axios.post(gmapiUrl + '/getVehicleInfoService', {
@@ -33,6 +37,11 @@ exports.getVehicleInfo = function (vehicleId) {
     return defer.promise;
 }
 
+/**
+ * returns doors status of the vehicle from gm api for
+ * @param vehicleId
+ * @returns {*|Promise<Cancel>|Promise|promise}
+ */
 exports.getSecurityStatus = function (vehicleId) {
     let defer = Q.defer();
     axios.post(gmapiUrl + '/getSecurityStatusService', {
@@ -55,6 +64,11 @@ exports.getSecurityStatus = function (vehicleId) {
     return defer.promise;
 }
 
+/**
+ * reports the fuel percentage if found for vehcile
+ * @param vehicleId
+ * @returns {*|Promise<Cancel>|Promise|promise}
+ */
 exports.getFuel = function (vehicleId) {
     let defer = Q.defer();
     axios.post(gmapiUrl + '/getEnergyService', {
@@ -77,7 +91,11 @@ exports.getFuel = function (vehicleId) {
         });
     return defer.promise;
 }
-
+/**
+ * reports battery percentage for vehicle
+ * @param vehicleId
+ * @returns {*|Promise<Cancel>|Promise|promise}
+ */
 exports.getBattery = function (vehicleId) {
     let defer = Q.defer();
     axios.post(gmapiUrl + '/getEnergyService', {
@@ -100,7 +118,12 @@ exports.getBattery = function (vehicleId) {
         });
     return defer.promise;
 }
-
+/**
+ * give command to start,stop vehicle and returs command success or failed
+ * @param vehicleId
+ * @param command
+ * @returns {*|Promise<Cancel>|Promise|promise}
+ */
 exports.triggerEngineAction = function (vehicleId, command) {
     let defer = Q.defer();
     let commands = {
