@@ -9,7 +9,7 @@ npm start
 To view the Swagger UI interface:
 
 ```
-open http://localhost:8080/docs
+open http://localhost:8300/docs
 ```
 
 TEST
