@@ -144,17 +144,6 @@ var isValidVehicleResponse = function (response) {
  return null;
 }
 
-var searchTreeForKey = function(tree,reqKey){
-    _.forEach(tree,function (value,key) {
-       if(key === reqKey){
-           return value;
-       }
-       else {
-           searchTreeForKey(key,reqKey);
-       }
-    });
-    return null;
-}
 function isStatusOk200(data){
     return data.status == 200 || data.status  == '200';
 }

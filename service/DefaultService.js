@@ -43,8 +43,6 @@ exports.getFuelByVehicleId = function (params,res,next) {
  * returns VehicleInfoResponse
  **/
 exports.getVehicleInfoByVehicleId = function (params,res,next) {
-    logger.debug("HERE___HERE");
-    logger.debug(params['vehicleid']);
     processResponse("getVehicleInfoById",res,gmapi.getVehicleInfo(
         params.vehicleid.value
     ));
