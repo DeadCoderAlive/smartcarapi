@@ -15,6 +15,7 @@ describe('getObjectTest',function () {
    });
 });
 
+//validation tests
 describe('is200OkTest',function () {
     it('should return 200 if data object status is 200',function () {
         var isStatusOk200 = gmapi.__get__('isStatusOk200');
@@ -36,22 +37,16 @@ describe('isValidSecurityStatusResponse',function () {
     });
 });
 
-describe('isValidSecurityStatusResponse',function () {
-    it('should return the security response object',function () {
-        var isValidSecurityStatusResponse = gmapi.__get__('isValidSecurityStatusResponse');
-        expect(isValidSecurityStatusResponse(securityResponse)).to.be(securityResponse.data);
-    });
-});
 
 describe('isValidFuelResponse',function () {
-    it('should return the security response object',function () {
+    it('should return the fuel response object',function () {
         var isValidFuelResponse = gmapi.__get__('isValidFuelResponse');
         expect(isValidFuelResponse(fuelResponse)).to.be(fuelResponse.data);
     });
 });
 
 describe('isValidBatteryResponse',function () {
-    it('should return the security response object',function () {
+    it('should return the battery response object',function () {
         var isValidBatteryResponse = gmapi.__get__('isValidBatteryResponse');
         expect(isValidBatteryResponse(fuelResponse)).to.be(fuelResponse.data);
     });

@@ -1,5 +1,5 @@
 
-
+// formatter switcher for model response with data
 exports.mapToFormat = function (model,data) {
     switch(model){
         case "VehicleInfoResponse":

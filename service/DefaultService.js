@@ -5,7 +5,7 @@ const gmapi = require('./gmapi');
 /**
  * Battery
  *
- * vehicleid Long 
+ * vehicleid Integer
  * returns BatteryRangeResponse
  **/
 exports.getBatteryByVehicleId = function (params,res,next) {
@@ -28,7 +28,7 @@ exports.getDoorsByVehicleId = function (params,res,next) {
 /**
  * Fuel
  *
- * vehicleid Long 
+ * vehicleid Integer
  * returns FuelRangeResponse
  **/
 exports.getFuelByVehicleId = function (params,res,next) {
@@ -52,7 +52,7 @@ exports.getVehicleInfoByVehicleId = function (params,res,next) {
 /**
  * START/STOP engine
  *
- * vehicleid Long 
+ * vehicleid Integer
  * body EngineRequest 
  * returns EngineResponse
  **/
@@ -60,6 +60,9 @@ exports.triggerEngineByVehicleId = function (params,res,next) {
     processResponse("triggerEngineByVehicleId",res,gmapi.triggerEngineAction(params.vehicleid.value,params.body.value.action));
 }
 
+/*
+   response handler
+ */
 function processResponse(name,res,responsePromise){
     responsePromise.then ( (serviceResponse) => {
         logger.debug("Successful request for : "+name);

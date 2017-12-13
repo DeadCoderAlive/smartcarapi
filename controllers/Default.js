@@ -17,7 +17,6 @@ module.exports.getFuelByVehicleId = function getFuelByVehicleId (req, res, next)
 };
 
 module.exports.getVehicleInfo = function getVehicleInfo (req, res, next) {
-   logger.debug("DEFAULT getVehicelInfo");
     Default.getVehicleInfoByVehicleId(req.swagger.params,res,next);
 };
 
